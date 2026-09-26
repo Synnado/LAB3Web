@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>การตรวจสอบเกรด (Switch Statement)</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
+        }
+        h2 {
+            margin-top: 0;
+            line-height: 1.4;
+        }
+        .controls {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+            align-items: center;
+        }
+        input[type="number"] {
+            padding: 9px 12px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            width: 160px;
+        }
+        button {
+            background-color: #ff9800;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button.random-btn {
+            background-color: #26b6f6;
+        }
+        button:hover {
+            opacity: 0.9;
+        }
+        #outputBox {
+            background-color: #111111;
+            color: #ffffff;
+            padding: 15px 20px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 16px;
+            line-height: 1.6;
+            max-width: 420px;
+            white-space: pre-line;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>การตรวจสอบเกรด<br>(Switch Statement)</h2>
+
+    <div class="controls">
+        <input type="number" id="scoreInput" min="0" max="100" placeholder="กรอกคะแนน (0-100)" value="93">
+        <button onclick="processScore(false)">แสดงผล</button>
+        <button class="random-btn" onclick="processScore(true)">สุ่มคะแนน (Run Code)</button>
+    </div>
+
+    <div id="outputBox"></div>
+
+    <script>
+        function processScore(isRandom) {
+            let score;
+
+            if (isRandom) {
+                score = Math.floor(Math.random() * 101);
+                document.getElementById("scoreInput").value = score;
+            } else {
+                let inputVal = document.getElementById("scoreInput").value;
+                if (inputVal === "" || Number(inputVal) < 0 || Number(inputVal) > 100) {
+                    document.getElementById("outputBox").innerText = "กรุณากรอกคะแนนระหว่าง 0 - 100";
+                    return;
+                }
+                score = Number(inputVal);
+            }
+
+            let grade = "";
+            let status = "";
+            let description = "";
+
+            if (score >= 80) {
+                grade = "A";
+            } else if (score >= 70) {
+                grade = "B";
+            } else if (score >= 60) {
+                grade = "C";
+            } else if (score >= 50) {
+                grade = "D";
+            } else {
+                grade = "F";
+            }
+
+            if (score >= 50) {
+                status = "ผ่าน";
+            } else {
+                status = "ไม่ผ่าน";
+            }
+
+            switch (grade) {
+                case "A":
+                    description = "ยอดเยี่ยมมาก";
+                    break;
+                case "B":
+                    description = "ดีมาก รักษามาตรฐานไว้";
+                    break;
+                case "C":
+                    description = "ผ่านเกณฑ์ระดับดี";
+                    break;
+                case "D":
+                    description = "พอใช้ แต่ควรพัฒนาเพิ่ม";
+                    break;
+                case "F":
+                    description = "ต้องลงทะเบียนเรียนใหม่";
+                    break;
+            }
+
+            let resultText = `คะแนนที่สุ่มได้: ${score}\nเกรด: ${grade}\nผลสอบ: ${status}\nคำอธิบาย: ${description}`;
+
+            document.getElementById("outputBox").innerText = resultText;
+
+            console.log(`คะแนน: ${score}`);
+            console.log(`เกรด: ${grade}`);
+            console.log(`ผลสอบ: ${status}`);
+            console.log(`คำอธิบาย: ${description}`);
+        }
+
+        processScore(false);
+    </script>
+
+</body>
+</html>
